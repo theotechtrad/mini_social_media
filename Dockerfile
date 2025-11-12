@@ -1,21 +1,17 @@
 # Use a small Python image
 FROM python:3.11-slim
 
-# Set working dir
+# Set work directory
 WORKDIR /app
 
-# Copy everything
-COPY . .
+# Copy project files
+COPY . /app
 
 # Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Expose the Streamlit port (Render uses $PORT)
-EXPOSE 8501
+# Expose the Render-assigned port
+EXPOSE 10000
 
-# Start Django (backend) in background, then start Streamlit using Render's $PORT
-CMD ["bash", "-c", "\
-python manage.py migrate --noinput && \
-python manage.py collectstatic --noinput || true && \
-python manage.py runserver 0.0.0.0:8000 & \
-streamlit run streamlit_app.py --server.port=$PORT --server.address=0.0.0.0"]
+# Start Streamlit as the main app and run Django in the background
+CMD ["bash", "-c", "python manage.py migrate && python manage.py collectstatic --noinput && python manage.py runserver 0.0.0.0:8000 & streamlit run streamlit_app.py --server.port=10000 --server.address=0.0.0.0"]
