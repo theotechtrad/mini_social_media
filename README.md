@@ -15,10 +15,6 @@ A full-stack social media web app built with Django (backend) and Streamlit (fro
 - Clean, modern UI with gradient design
 - RESTful API architecture
 
-## Screenshots
-
-*(Add your screenshots here)*
-
 ## Tech Stack
 
 **Backend:**
